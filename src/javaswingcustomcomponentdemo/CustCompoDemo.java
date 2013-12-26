@@ -6,7 +6,11 @@ package javaswingcustomcomponentdemo;
 
 import java.awt.FlowLayout;
 import java.awt.Label;
+import java.util.LinkedList;
+import java.util.List;
+import javaswingcustomcomponentdemo.model.Result;
 import javax.swing.BoxLayout;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -33,27 +37,28 @@ public class CustCompoDemo extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanelContainer = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonAddCompo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Demo");
 
         javax.swing.GroupLayout jPanelContainerLayout = new javax.swing.GroupLayout(jPanelContainer);
         jPanelContainer.setLayout(jPanelContainerLayout);
         jPanelContainerLayout.setHorizontalGroup(
             jPanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 398, Short.MAX_VALUE)
+            .addGap(0, 855, Short.MAX_VALUE)
         );
         jPanelContainerLayout.setVerticalGroup(
             jPanelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 256, Short.MAX_VALUE)
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(jPanelContainer);
 
-        jButton1.setText("Add Custom Components");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddCompo.setText("Add Custom Components");
+        jButtonAddCompo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAddCompoActionPerformed(evt);
             }
         });
 
@@ -61,35 +66,71 @@ public class CustCompoDemo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(jButtonAddCompo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(12, 12, 12))
+                .addComponent(jButtonAddCompo)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAddCompoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCompoActionPerformed
+
+        SwingWorker worker = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                jButtonAddCompo.setEnabled(false);
+                addToPanel();
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                super.done(); //To change body of generated methods, choose Tools | Templates.
+                jButtonAddCompo.setEnabled(true);
+            }
+        };
+
+        worker.execute();
+    }//GEN-LAST:event_jButtonAddCompoActionPerformed
+
+    private void addToPanel() {
         jPanelContainer.setLayout(new BoxLayout(jPanelContainer, BoxLayout.Y_AXIS));
-        for (int i = 1; i <= 50; i++) {
-            MyCustomPanel myPanelx=new MyCustomPanel("Heading " + i, "Button " + i , "Hello there " + i);
-            jPanelContainer.add(myPanelx);
-            jPanelContainer.revalidate();
-            jPanelContainer.updateUI();
-            validate();
-            revalidate();
+        for (int i = 1; i <= 300; i++) {
+//            MyCustomPanel myPanelx = new MyCustomPanel("Heading " + i, "Button " + i, "Hello there " + i);
+//            jPanelContainer.add(myPanelx);
+//            jPanelContainer.revalidate();
+//            jPanelContainer.updateUI();
+//            validate();
+//            revalidate();
+
+            //generate results
+            String groupName = RandTextGen.generateText(10);
+            List<Result> resultList = new LinkedList<>();
+            for (int j = 0; j < 3; j++) {
+                String title = RandTextGen.generateText(10);
+                String content = RandTextGen.generateText(500);
+                Result result = new Result(title, content);
+                resultList.add(result);
+            }
+
+            ResultGroup resultGrp = new ResultGroup(resultList, groupName);
+            jPanelContainer.add(resultGrp);
+            //jPanelContainer.revalidate();
+            //revalidate();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        jPanelContainer.updateUI();
+    }
 
     /**
      * @param args the command line arguments
@@ -126,7 +167,7 @@ public class CustCompoDemo extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAddCompo;
     private javax.swing.JPanel jPanelContainer;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
