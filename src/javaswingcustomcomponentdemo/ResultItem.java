@@ -38,9 +38,11 @@ public class ResultItem extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jTextAreaResultText = new javax.swing.JTextArea();
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.black);
         jLabel1.setText("Title");
 
-        JLabelPageTitle.setForeground(new java.awt.Color(91, 86, 86));
+        JLabelPageTitle.setForeground(new java.awt.Color(56, 56, 56));
         JLabelPageTitle.setText("......................................");
 
         jButtonSave.setText("Save");
@@ -50,9 +52,11 @@ public class ResultItem extends javax.swing.JPanel {
         jButtonShare.setText("Share");
 
         jTextAreaResultText.setEditable(false);
+        jTextAreaResultText.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.shadow"));
         jTextAreaResultText.setColumns(20);
         jTextAreaResultText.setLineWrap(true);
         jTextAreaResultText.setRows(5);
+        jTextAreaResultText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -64,7 +68,7 @@ public class ResultItem extends javax.swing.JPanel {
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(61, 61, 61)
                         .addComponent(JLabelPageTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jButtonSave)

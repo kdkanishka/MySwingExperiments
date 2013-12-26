@@ -1,4 +1,4 @@
-package javaswingcustomcomponentdemo;
+package javaswingcustomcomponentdemo.util;
 
 
 import java.util.Random;

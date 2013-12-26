@@ -4,12 +4,15 @@
  */
 package javaswingcustomcomponentdemo;
 
+import javaswingcustomcomponentdemo.util.RandTextGen;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.util.LinkedList;
 import java.util.List;
 import javaswingcustomcomponentdemo.model.Result;
+import javaswingcustomcomponentdemo.util.RandNumUtil;
 import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
 /**
@@ -38,6 +41,8 @@ public class CustCompoDemo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanelContainer = new javax.swing.JPanel();
         jButtonAddCompo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Demo");
@@ -62,6 +67,20 @@ public class CustCompoDemo extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Collapse All");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Expand All");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,6 +88,10 @@ public class CustCompoDemo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonAddCompo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
@@ -77,7 +100,10 @@ public class CustCompoDemo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAddCompo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAddCompo)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap())
         );
 
@@ -104,20 +130,30 @@ public class CustCompoDemo extends javax.swing.JFrame {
         worker.execute();
     }//GEN-LAST:event_jButtonAddCompoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        toggleExpand(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        toggleExpand(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void toggleExpand(boolean shouldExpand){
+        int componentCount=jPanelContainer.getComponentCount();
+        for(int i=0;i<componentCount;i++){
+            ResultGroup resultGroup= (ResultGroup) jPanelContainer.getComponent(i);
+            resultGroup.getjPanelResultList().setVisible(shouldExpand);
+        }
+    }
+    
     private void addToPanel() {
         jPanelContainer.setLayout(new BoxLayout(jPanelContainer, BoxLayout.Y_AXIS));
         for (int i = 1; i <= 300; i++) {
-//            MyCustomPanel myPanelx = new MyCustomPanel("Heading " + i, "Button " + i, "Hello there " + i);
-//            jPanelContainer.add(myPanelx);
-//            jPanelContainer.revalidate();
-//            jPanelContainer.updateUI();
-//            validate();
-//            revalidate();
-
             //generate results
             String groupName = RandTextGen.generateText(10);
             List<Result> resultList = new LinkedList<>();
-            for (int j = 0; j < 3; j++) {
+            int numOfResults = RandNumUtil.getRandInt(5)+1;
+            for (int j = 0; j < numOfResults; j++) {
                 String title = RandTextGen.generateText(10);
                 String content = RandTextGen.generateText(500);
                 Result result = new Result(title, content);
@@ -126,8 +162,6 @@ public class CustCompoDemo extends javax.swing.JFrame {
 
             ResultGroup resultGrp = new ResultGroup(resultList, groupName);
             jPanelContainer.add(resultGrp);
-            //jPanelContainer.revalidate();
-            //revalidate();
         }
         jPanelContainer.updateUI();
     }
@@ -167,6 +201,8 @@ public class CustCompoDemo extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAddCompo;
     private javax.swing.JPanel jPanelContainer;
     private javax.swing.JScrollPane jScrollPane1;
